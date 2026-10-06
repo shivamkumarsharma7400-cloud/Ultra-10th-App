@@ -47,6 +47,9 @@ android/app/key.properties
 android/app/upload-keystore.jks
 android/app/*.jks
 android/app/*.keystore
+Ultra_10th_Release_APK/
+*.apk
+*.zip
 
 # iOS/macOS related
 **/ios/**/*.mode1v3
