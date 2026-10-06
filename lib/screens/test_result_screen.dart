@@ -44,35 +44,31 @@ class TestResultScreen extends StatelessWidget {
         : 0;
 
     String verdict;
-    Color verdictColor;
     if (percentage >= 80) {
       verdict = 'Outstanding Performance! 🏆';
-      verdictColor = const Color(0xFF10B981);
     } else if (percentage >= 50) {
       verdict = 'Good Effort, Keep Practicing! 👍';
-      verdictColor = const Color(0xFF6366F1);
     } else {
-      verdict = 'Needs Revision & Hard Work 📚';
-      verdictColor = const Color(0xFFF59E0B);
+      verdict = 'Needs Revision & Practice 📚';
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFF090B10),
+      backgroundColor: const Color(0xFFF7F7F7),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF13161F),
+        backgroundColor: const Color(0xFFFFFFFF),
         elevation: 0,
         title: Text(
           'Test Results',
           style: GoogleFonts.plusJakartaSans(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+            color: const Color(0xFF111111),
+            fontWeight: FontWeight.w800,
             fontSize: 18,
           ),
         ),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.home_rounded, color: Colors.white70),
+            icon: const Icon(Icons.home_rounded, color: Color(0xFF111111)),
             tooltip: 'Return to Hub',
             onPressed: () => Navigator.pop(context),
           ),
@@ -84,18 +80,21 @@ class TestResultScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Main Scorecard Banner
+              // Main Scorecard Banner (Website Style)
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF1E2330), Color(0xFF13161F)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+                  color: const Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.white.withOpacity(0.08)),
+                  border: Border.all(color: const Color(0xFFDEDEDE)),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x06000000),
+                      blurRadius: 12,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
@@ -103,15 +102,15 @@ class TestResultScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
-                        color: verdictColor.withOpacity(0.15),
+                        color: const Color(0xFFF7F7F7),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: verdictColor.withOpacity(0.3)),
+                        border: Border.all(color: const Color(0xFFDEDEDE)),
                       ),
                       child: Text(
                         verdict,
-                        style: TextStyle(
-                          color: verdictColor,
-                          fontWeight: FontWeight.bold,
+                        style: const TextStyle(
+                          color: Color(0xFF111111),
+                          fontWeight: FontWeight.w700,
                           fontSize: 13,
                         ),
                       ),
@@ -129,38 +128,47 @@ class TestResultScreen extends StatelessWidget {
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 48,
                             fontWeight: FontWeight.w900,
-                            color: Colors.white,
+                            letterSpacing: -1,
+                            color: const Color(0xFF111111),
                           ),
                         ),
                         Text(
                           ' / $totalQuestions',
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white.withOpacity(0.5),
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF606060),
                           ),
                         ),
                       ],
                     ),
                     Text(
                       '$percentage% Marks Scored',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.white.withOpacity(0.7),
+                        color: Color(0xFF606060),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 20),
 
                     // Quick Stats Row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildStatPill('Correct', '$correctCount', const Color(0xFF10B981)),
-                        _buildStatPill('Wrong', '$wrongCount', const Color(0xFFEF4444)),
-                        _buildStatPill('Skipped', '$unattemptedCount', const Color(0xFFF59E0B)),
-                        _buildStatPill('Time', _formatTime(timeTakenSeconds), const Color(0xFF818CF8)),
-                      ],
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF7F7F7),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: const Color(0xFFE5E5E5)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _buildStatPill('Correct', '$correctCount', const Color(0xFF10B981)),
+                          _buildStatPill('Wrong', '$wrongCount', const Color(0xFFDC2626)),
+                          _buildStatPill('Skipped', '$unattemptedCount', const Color(0xFFD97706)),
+                          _buildStatPill('Time', _formatTime(timeTakenSeconds), const Color(0xFF111111)),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -180,10 +188,10 @@ class TestResultScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: const Icon(Icons.refresh, size: 18, color: Colors.white),
-                      label: const Text('Retake Test', style: TextStyle(color: Colors.white)),
+                      icon: const Icon(Icons.refresh, size: 18, color: Color(0xFF111111)),
+                      label: const Text('Retake Test', style: TextStyle(color: Color(0xFF111111), fontWeight: FontWeight.w600)),
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.white.withOpacity(0.15)),
+                        side: const BorderSide(color: Color(0xFFDEDEDE)),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
@@ -193,10 +201,12 @@ class TestResultScreen extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.dashboard_rounded, size: 18, color: Colors.white),
-                      label: const Text('All Tests', style: TextStyle(color: Colors.white)),
+                      icon: const Icon(Icons.dashboard_rounded, size: 18),
+                      label: const Text('All Tests', style: TextStyle(fontWeight: FontWeight.w700)),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF4F46E5),
+                        backgroundColor: const Color(0xFF111111),
+                        foregroundColor: Colors.white,
+                        elevation: 0,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
@@ -212,16 +222,16 @@ class TestResultScreen extends StatelessWidget {
                 'Question Solutions & Answers',
                 style: GoogleFonts.plusJakartaSans(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                  color: const Color(0xFF111111),
                 ),
               ),
-              const SizedBox(height: 6),
-              Text(
-                'Review your selected answers alongside full step-by-step explanations.',
+              const SizedBox(height: 4),
+              const Text(
+                'Review your chosen options alongside explanations.',
                 style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white.withOpacity(0.5),
+                  fontSize: 13,
+                  color: Color(0xFF606060),
                 ),
               ),
 
@@ -234,31 +244,31 @@ class TestResultScreen extends StatelessWidget {
                 final isCorrect = studentAnswer == q.correctOption;
                 final isSkipped = studentAnswer == null;
 
-                Color cardColor;
-                IconData statusIcon;
                 Color statusColor;
+                IconData statusIcon;
+                String statusLabel;
 
                 if (isSkipped) {
-                  cardColor = const Color(0xFFF59E0B).withOpacity(0.08);
+                  statusColor = const Color(0xFFD97706);
                   statusIcon = Icons.remove_circle_outline;
-                  statusColor = const Color(0xFFF59E0B);
+                  statusLabel = 'Unattempted';
                 } else if (isCorrect) {
-                  cardColor = const Color(0xFF10B981).withOpacity(0.08);
-                  statusIcon = Icons.check_circle_outline;
                   statusColor = const Color(0xFF10B981);
+                  statusIcon = Icons.check_circle_outline;
+                  statusLabel = 'Correct (+1)';
                 } else {
-                  cardColor = const Color(0xFFEF4444).withOpacity(0.08);
+                  statusColor = const Color(0xFFDC2626);
                   statusIcon = Icons.cancel_outlined;
-                  statusColor = const Color(0xFFEF4444);
+                  statusLabel = 'Incorrect (0)';
                 }
 
                 return Container(
                   margin: const EdgeInsets.only(bottom: 16),
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF13161F),
+                    color: const Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withOpacity(0.06)),
+                    border: Border.all(color: const Color(0xFFDEDEDE)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,15 +278,16 @@ class TestResultScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                             decoration: BoxDecoration(
-                              color: cardColor,
+                              color: const Color(0xFFF7F7F7),
                               borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xFFDEDEDE)),
                             ),
                             child: Text(
                               'Q ${index + 1}',
-                              style: TextStyle(
-                                color: statusColor,
+                              style: const TextStyle(
+                                color: Color(0xFF111111),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
                               ),
@@ -287,11 +298,7 @@ class TestResultScreen extends StatelessWidget {
                               Icon(statusIcon, color: statusColor, size: 16),
                               const SizedBox(width: 4),
                               Text(
-                                isSkipped
-                                    ? 'Unattempted'
-                                    : isCorrect
-                                        ? 'Correct (+1)'
-                                        : 'Incorrect (0)',
+                                statusLabel,
                                 style: TextStyle(
                                   color: statusColor,
                                   fontWeight: FontWeight.bold,
@@ -309,8 +316,9 @@ class TestResultScreen extends StatelessWidget {
                         q.question,
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          height: 1.4,
+                          color: const Color(0xFF111111),
                         ),
                       ),
                       const SizedBox(height: 14),
@@ -320,18 +328,21 @@ class TestResultScreen extends StatelessWidget {
                         final isStudentChoice = studentAnswer == optIdx;
                         final isCorrectChoice = q.correctOption == optIdx;
 
-                        Color optBg = const Color(0xFF1E2330);
-                        Color optBorder = Colors.transparent;
+                        Color optBg = const Color(0xFFF7F7F7);
+                        Color optBorder = const Color(0xFFE5E5E5);
+                        Color textColor = const Color(0xFF111111);
                         Widget? trailingIcon;
 
                         if (isCorrectChoice) {
-                          optBg = const Color(0xFF10B981).withOpacity(0.15);
-                          optBorder = const Color(0xFF10B981);
-                          trailingIcon = const Icon(Icons.check, color: Color(0xFF10B981), size: 16);
+                          optBg = const Color(0xFFF0FDF4);
+                          optBorder = const Color(0xFF86EFAC);
+                          textColor = const Color(0xFF166534);
+                          trailingIcon = const Icon(Icons.check, color: Color(0xFF166534), size: 16);
                         } else if (isStudentChoice && !isCorrect) {
-                          optBg = const Color(0xFFEF4444).withOpacity(0.15);
-                          optBorder = const Color(0xFFEF4444);
-                          trailingIcon = const Icon(Icons.close, color: Color(0xFFEF4444), size: 16);
+                          optBg = const Color(0xFFFEF2F2);
+                          optBorder = const Color(0xFFFECACA);
+                          textColor = const Color(0xFF991B1B);
+                          trailingIcon = const Icon(Icons.close, color: Color(0xFF991B1B), size: 16);
                         }
 
                         final optLetter = String.fromCharCode(65 + optIdx);
@@ -350,11 +361,7 @@ class TestResultScreen extends StatelessWidget {
                                 '$optLetter. ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: isCorrectChoice
-                                      ? const Color(0xFF10B981)
-                                      : isStudentChoice
-                                          ? const Color(0xFFEF4444)
-                                          : Colors.white60,
+                                  color: textColor,
                                 ),
                               ),
                               Expanded(
@@ -362,9 +369,8 @@ class TestResultScreen extends StatelessWidget {
                                   q.options[optIdx],
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: isCorrectChoice || isStudentChoice
-                                        ? Colors.white
-                                        : Colors.white70,
+                                    fontWeight: isCorrectChoice || isStudentChoice ? FontWeight.w600 : FontWeight.normal,
+                                    color: textColor,
                                   ),
                                 ),
                               ),
@@ -380,14 +386,14 @@ class TestResultScreen extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF1E2330).withOpacity(0.6),
+                            color: const Color(0xFFF7F7F7),
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: const Color(0xFF4F46E5).withOpacity(0.2)),
+                            border: Border.all(color: const Color(0xFFDEDEDE)),
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(Icons.lightbulb_outline, size: 16, color: Color(0xFFFBBF24)),
+                              const Icon(Icons.lightbulb_outline, size: 16, color: Color(0xFF111111)),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Column(
@@ -396,7 +402,7 @@ class TestResultScreen extends StatelessWidget {
                                     const Text(
                                       'Explanation:',
                                       style: TextStyle(
-                                        color: Color(0xFFFBBF24),
+                                        color: Color(0xFF111111),
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -404,10 +410,10 @@ class TestResultScreen extends StatelessWidget {
                                     const SizedBox(height: 2),
                                     Text(
                                       q.explanation,
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.8),
+                                      style: const TextStyle(
+                                        color: Color(0xFF606060),
                                         fontSize: 12,
-                                        height: 1.3,
+                                        height: 1.35,
                                       ),
                                     ),
                                   ],
@@ -442,9 +448,9 @@ class TestResultScreen extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 11,
-            color: Colors.white.withOpacity(0.5),
+            color: Color(0xFF606060),
           ),
         ),
       ],

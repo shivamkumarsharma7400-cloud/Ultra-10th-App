@@ -72,7 +72,7 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
       builder: (ctx) => Container(
         padding: const EdgeInsets.all(24),
         decoration: const BoxDecoration(
-          color: Color(0xFF13161F),
+          color: Color(0xFFFFFFFF),
           borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: Column(
@@ -85,18 +85,22 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                 Text(
                   'Question Palette',
                   style: GoogleFonts.plusJakartaSans(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF111111),
+                    fontWeight: FontWeight.w800,
                     fontSize: 16,
                   ),
                 ),
                 Text(
                   '${_selectedAnswers.length} of ${widget.test.questions.length} Attempted',
-                  style: const TextStyle(color: Color(0xFF10B981), fontSize: 13),
+                  style: const TextStyle(
+                    color: Color(0xFF606060),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 18),
             Wrap(
               spacing: 10,
               runSpacing: 10,
@@ -114,24 +118,27 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                     height: 44,
                     decoration: BoxDecoration(
                       color: isCurrent
-                          ? const Color(0xFF4F46E5)
+                          ? const Color(0xFF111111)
                           : isAnswered
-                              ? const Color(0xFF10B981).withOpacity(0.25)
-                              : const Color(0xFF1E2330),
+                              ? const Color(0xFFF0F0F0)
+                              : const Color(0xFFFFFFFF),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: isCurrent
-                            ? const Color(0xFF818CF8)
+                            ? const Color(0xFF111111)
                             : isAnswered
-                                ? const Color(0xFF10B981)
-                                : Colors.white.withOpacity(0.1),
+                                ? const Color(0xFF111111)
+                                : const Color(0xFFDEDEDE),
+                        width: isAnswered || isCurrent ? 1.5 : 1,
                       ),
                     ),
                     child: Center(
                       child: Text(
                         '${index + 1}',
                         style: TextStyle(
-                          color: isCurrent || isAnswered ? Colors.white : Colors.white60,
+                          color: isCurrent
+                              ? Colors.white
+                              : const Color(0xFF111111),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -155,29 +162,33 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF161922),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        backgroundColor: const Color(0xFFFFFFFF),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+          side: const BorderSide(color: Color(0xFFDEDEDE)),
+        ),
         title: Text(
           'Submit Test?',
           style: GoogleFonts.plusJakartaSans(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+            color: const Color(0xFF111111),
+            fontWeight: FontWeight.w800,
           ),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Are you sure you want to finish and submit your test?',
-              style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 13),
+              style: TextStyle(color: Color(0xFF606060), fontSize: 13),
             ),
             const SizedBox(height: 16),
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFF0F121A),
-                borderRadius: BorderRadius.circular(10),
+                color: const Color(0xFFF7F7F7),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFE5E5E5)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -187,26 +198,26 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                       Text(
                         '$attempted',
                         style: const TextStyle(
-                          color: Color(0xFF10B981),
+                          color: Color(0xFF111111),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                       ),
-                      const Text('Attempted', style: TextStyle(color: Colors.white54, fontSize: 11)),
+                      const Text('Attempted', style: TextStyle(color: Color(0xFF606060), fontSize: 11)),
                     ],
                   ),
-                  Container(width: 1, height: 28, color: Colors.white12),
+                  Container(width: 1, height: 28, color: const Color(0xFFDEDEDE)),
                   Column(
                     children: [
                       Text(
                         '$unattempted',
                         style: const TextStyle(
-                          color: Color(0xFFF59E0B),
+                          color: Color(0xFF606060),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                       ),
-                      const Text('Unattempted', style: TextStyle(color: Colors.white54, fontSize: 11)),
+                      const Text('Unattempted', style: TextStyle(color: Color(0xFF606060), fontSize: 11)),
                     ],
                   ),
                 ],
@@ -217,7 +228,7 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text('Cancel', style: TextStyle(color: Colors.white.withOpacity(0.6))),
+            child: const Text('Cancel', style: TextStyle(color: Color(0xFF606060))),
           ),
           ElevatedButton(
             onPressed: () {
@@ -225,10 +236,12 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
               _submitTest();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4F46E5),
+              backgroundColor: const Color(0xFF111111),
+              foregroundColor: Colors.white,
+              elevation: 0,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
-            child: const Text('Submit Now', style: TextStyle(color: Colors.white)),
+            child: const Text('Submit Now'),
           ),
         ],
       ),
@@ -242,7 +255,7 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Time up! Test submitted automatically.'),
-          backgroundColor: Color(0xFFF59E0B),
+          backgroundColor: Color(0xFF111111),
         ),
       );
     }
@@ -262,31 +275,35 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF161922),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: const Color(0xFFFFFFFF),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: Color(0xFFDEDEDE)),
+        ),
         title: Text(
           'Leave Test?',
           style: GoogleFonts.plusJakartaSans(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+            color: const Color(0xFF111111),
+            fontWeight: FontWeight.w800,
           ),
         ),
-        content: Text(
+        content: const Text(
           'Leaving will discard your current progress in this test. Do you really want to exit?',
-          style: TextStyle(color: Colors.white.withOpacity(0.7)),
+          style: TextStyle(color: Color(0xFF606060)),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('Keep Taking Test', style: TextStyle(color: Colors.white.withOpacity(0.6))),
+            child: const Text('Keep Taking Test', style: TextStyle(color: Color(0xFF606060))),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
+              backgroundColor: const Color(0xFF111111),
+              foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
-            child: const Text('Exit Test', style: TextStyle(color: Colors.white)),
+            child: const Text('Exit Test'),
           ),
         ],
       ),
@@ -299,13 +316,13 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
   Widget build(BuildContext context) {
     if (widget.test.questions.isEmpty) {
       return Scaffold(
-        backgroundColor: const Color(0xFF090B10),
+        backgroundColor: const Color(0xFFF7F7F7),
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: const Color(0xFFFFFFFF),
           elevation: 0,
         ),
         body: const Center(
-          child: Text('No questions available in this test.', style: TextStyle(color: Colors.white)),
+          child: Text('No questions available in this test.', style: TextStyle(color: Color(0xFF111111))),
         ),
       );
     }
@@ -317,12 +334,12 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
     return WillPopScope(
       onWillPop: _handleExitAttempt,
       child: Scaffold(
-        backgroundColor: const Color(0xFF090B10),
+        backgroundColor: const Color(0xFFF7F7F7),
         appBar: AppBar(
-          backgroundColor: const Color(0xFF13161F),
+          backgroundColor: const Color(0xFFFFFFFF),
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.close_rounded, color: Colors.white70),
+            icon: const Icon(Icons.close_rounded, color: Color(0xFF111111)),
             onPressed: () async {
               if (await _handleExitAttempt()) {
                 if (mounted) Navigator.pop(context);
@@ -332,8 +349,8 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
           title: Text(
             'Q ${_currentIndex + 1} / $totalQuestions',
             style: GoogleFonts.plusJakartaSans(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+              color: const Color(0xFF111111),
+              fontWeight: FontWeight.w800,
               fontSize: 16,
             ),
           ),
@@ -343,26 +360,24 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: isLowTime
-                    ? Colors.redAccent.withOpacity(0.2)
-                    : const Color(0xFF1E2330),
+                color: isLowTime ? const Color(0xFFFEF2F2) : const Color(0xFFF7F7F7),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: isLowTime ? Colors.redAccent : const Color(0xFF4F46E5),
+                  color: isLowTime ? const Color(0xFFFECACA) : const Color(0xFFDEDEDE),
                 ),
               ),
               child: Row(
                 children: [
                   Icon(
-                    Icons.timer,
+                    Icons.timer_outlined,
                     size: 15,
-                    color: isLowTime ? Colors.redAccent : const Color(0xFF818CF8),
+                    color: isLowTime ? const Color(0xFFDC2626) : const Color(0xFF111111),
                   ),
                   const SizedBox(width: 4),
                   Text(
                     _formatTimer(_timeLeftSeconds),
                     style: TextStyle(
-                      color: isLowTime ? Colors.redAccent : Colors.white,
+                      color: isLowTime ? const Color(0xFFDC2626) : const Color(0xFF111111),
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -371,7 +386,7 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.grid_view_rounded, color: Color(0xFF818CF8)),
+              icon: const Icon(Icons.grid_view_rounded, color: Color(0xFF111111)),
               tooltip: 'Question Palette',
               onPressed: _openPaletteSheet,
             ),
@@ -383,8 +398,8 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
               // Progress Line
               LinearProgressIndicator(
                 value: (_currentIndex + 1) / totalQuestions,
-                backgroundColor: const Color(0xFF1E2330),
-                valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4F46E5)),
+                backgroundColor: const Color(0xFFE5E5E5),
+                valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF111111)),
                 minHeight: 3,
               ),
 
@@ -402,15 +417,16 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF4F46E5).withOpacity(0.15),
+                              color: const Color(0xFFFFFFFF),
                               borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: const Color(0xFFDEDEDE)),
                             ),
                             child: Text(
                               'QUESTION ${_currentIndex + 1}',
                               style: const TextStyle(
-                                color: Color(0xFF818CF8),
+                                color: Color(0xFF111111),
                                 fontSize: 11,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w700,
                                 letterSpacing: 0.8,
                               ),
                             ),
@@ -418,25 +434,34 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                           if (_selectedAnswers.containsKey(_currentIndex))
                             TextButton.icon(
                               onPressed: _clearChoice,
-                              icon: const Icon(Icons.refresh, size: 14, color: Colors.white54),
-                              label: const Text('Clear choice', style: TextStyle(color: Colors.white54, fontSize: 12)),
+                              icon: const Icon(Icons.refresh, size: 14, color: Color(0xFF606060)),
+                              label: const Text('Clear choice', style: TextStyle(color: Color(0xFF606060), fontSize: 12)),
                             ),
                         ],
                       ),
                       const SizedBox(height: 14),
 
-                      // Question Text
-                      Text(
-                        currentQ.question,
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          height: 1.4,
-                          color: Colors.white,
+                      // Question Card (Website Style)
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFFFFF),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: const Color(0xFFDEDEDE)),
+                        ),
+                        child: Text(
+                          currentQ.question,
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            height: 1.45,
+                            color: const Color(0xFF111111),
+                          ),
                         ),
                       ),
 
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 20),
 
                       // Options List
                       ...List.generate(currentQ.options.length, (optIndex) {
@@ -449,19 +474,25 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                             onTap: () => _selectOption(optIndex),
                             borderRadius: BorderRadius.circular(14),
                             child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 180),
+                              duration: const Duration(milliseconds: 150),
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: isSelected
-                                    ? const Color(0xFF4F46E5).withOpacity(0.2)
-                                    : const Color(0xFF13161F),
+                                color: const Color(0xFFFFFFFF),
                                 borderRadius: BorderRadius.circular(14),
                                 border: Border.all(
                                   color: isSelected
-                                      ? const Color(0xFF6366F1)
-                                      : Colors.white.withOpacity(0.08),
-                                  width: isSelected ? 1.5 : 1,
+                                      ? const Color(0xFF111111)
+                                      : const Color(0xFFDEDEDE),
+                                  width: isSelected ? 2 : 1,
                                 ),
+                                boxShadow: [
+                                  if (isSelected)
+                                    const BoxShadow(
+                                      color: Color(0x0A000000),
+                                      blurRadius: 8,
+                                      offset: Offset(0, 2),
+                                    ),
+                                ],
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -472,15 +503,20 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                                     height: 32,
                                     decoration: BoxDecoration(
                                       color: isSelected
-                                          ? const Color(0xFF4F46E5)
-                                          : const Color(0xFF1E2330),
+                                          ? const Color(0xFF111111)
+                                          : const Color(0xFFF7F7F7),
                                       shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: isSelected
+                                            ? const Color(0xFF111111)
+                                            : const Color(0xFFDEDEDE),
+                                      ),
                                     ),
                                     child: Center(
                                       child: Text(
                                         optLabel,
                                         style: TextStyle(
-                                          color: isSelected ? Colors.white : Colors.white60,
+                                          color: isSelected ? Colors.white : const Color(0xFF111111),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
                                         ),
@@ -493,9 +529,9 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                                     child: Text(
                                       currentQ.options[optIndex],
                                       style: TextStyle(
-                                        color: isSelected ? Colors.white : Colors.white.withOpacity(0.85),
+                                        color: const Color(0xFF111111),
                                         fontSize: 14,
-                                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.normal,
                                       ),
                                     ),
                                   ),
@@ -510,13 +546,13 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                 ),
               ),
 
-              // Bottom Control Bar
+              // Bottom Control Bar (Pure White with line border)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF13161F),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFFFFFF),
                   border: Border(
-                    top: BorderSide(color: Colors.white.withOpacity(0.06)),
+                    top: BorderSide(color: Color(0xFFE5E5E5)),
                   ),
                 ),
                 child: Row(
@@ -527,11 +563,11 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                         child: OutlinedButton(
                           onPressed: () => setState(() => _currentIndex--),
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: Colors.white.withOpacity(0.12)),
+                            side: const BorderSide(color: Color(0xFFDEDEDE)),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
-                          child: const Text('Previous', style: TextStyle(color: Colors.white)),
+                          child: const Text('Previous', style: TextStyle(color: Color(0xFF111111), fontWeight: FontWeight.w600)),
                         ),
                       )
                     else
@@ -545,16 +581,18 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                         child: ElevatedButton(
                           onPressed: () => setState(() => _currentIndex++),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4F46E5),
+                            backgroundColor: const Color(0xFF111111),
+                            foregroundColor: Colors.white,
+                            elevation: 0,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Next', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                              Text('Next', style: TextStyle(fontWeight: FontWeight.bold)),
                               SizedBox(width: 4),
-                              Icon(Icons.arrow_forward_rounded, size: 16, color: Colors.white),
+                              Icon(Icons.arrow_forward_rounded, size: 16),
                             ],
                           ),
                         ),
@@ -564,13 +602,15 @@ class _McqPlayerScreenState extends State<McqPlayerScreen> {
                         child: ElevatedButton(
                           onPressed: _confirmSubmit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF10B981),
+                            backgroundColor: const Color(0xFF111111),
+                            foregroundColor: Colors.white,
+                            elevation: 0,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           child: const Text(
-                            'Submit Test 🏁',
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                            'Submit Test',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),

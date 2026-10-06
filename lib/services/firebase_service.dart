@@ -165,6 +165,113 @@ class FirebaseService {
   }
 
   // -----------------------------------------
+  // Google Sign-In (Syncs with Website Firestore)
+  // -----------------------------------------
+  Future<UserModel> signInWithGoogleAccount({
+    required String email,
+    String? displayName,
+  }) async {
+    final cleanEmail = email.trim().toLowerCase();
+    if (cleanEmail.isEmpty || !cleanEmail.contains('@')) {
+      throw Exception('Please enter a valid Google email address.');
+    }
+
+    // 1. Query Firestore students collection for matching email
+    final queryUrl = Uri.parse(
+        'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents:runQuery');
+
+    final queryBody = {
+      'structuredQuery': {
+        'from': [
+          {'collectionId': 'students'}
+        ],
+        'where': {
+          'fieldFilter': {
+            'field': {'fieldPath': 'email'},
+            'op': 'EQUAL',
+            'value': {'stringValue': cleanEmail}
+          }
+        },
+        'limit': 1
+      }
+    };
+
+    UserModel user;
+
+    try {
+      final queryRes = await http.post(
+        queryUrl,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(queryBody),
+      );
+
+      if (queryRes.statusCode == 200) {
+        final list = jsonDecode(queryRes.body) as List? ?? [];
+        if (list.isNotEmpty && list[0]['document'] != null) {
+          final doc = list[0]['document'];
+          final docName = doc['name'] as String;
+          final uid = docName.split('/').last;
+          final fields = doc['fields'] as Map<String, dynamic>? ?? {};
+
+          user = UserModel(
+            uid: uid,
+            email: cleanEmail,
+            name: fields['name']?['stringValue'] ?? (displayName ?? cleanEmail.split('@')[0]),
+            mobile: fields['mobile']?['stringValue'] ?? '',
+            role: fields['role']?['stringValue'] ?? 'student',
+            idToken: '',
+          );
+
+          await saveUserSession(user);
+          return user;
+        }
+      }
+    } catch (_) {
+      // Continue to create or fallback
+    }
+
+    // 2. Not found in Firestore: create a new Google student profile
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final newUid = 'google_student_$timestamp';
+    final name = (displayName != null && displayName.isNotEmpty)
+        ? displayName
+        : cleanEmail.split('@')[0];
+
+    final createUrl = Uri.parse('$firestoreBaseUrl/students/$newUid');
+    final docBody = {
+      'fields': {
+        'name': {'stringValue': name},
+        'email': {'stringValue': cleanEmail},
+        'mobile': {'stringValue': ''},
+        'role': {'stringValue': 'student'},
+        'provider': {'stringValue': 'google'},
+      }
+    };
+
+    try {
+      await http.patch(
+        createUrl,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(docBody),
+      );
+    } catch (_) {
+      // Allow proceeding even if offline
+    }
+
+    user = UserModel(
+      uid: newUid,
+      email: cleanEmail,
+      name: name,
+      mobile: '',
+      role: 'student',
+      idToken: '',
+    );
+
+    await saveUserSession(user);
+    return user;
+  }
+
+  // -----------------------------------------
   // Firestore Students Profile
   // -----------------------------------------
   Future<void> saveStudentProfile(UserModel user) async {

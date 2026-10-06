@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 800),
     );
 
     _scaleAnimation = Tween<double>(begin: 0.95, end: 1.0).animate(
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _checkSessionAndNavigate() async {
-    await Future.delayed(const Duration(milliseconds: 1800));
+    await Future.delayed(const Duration(milliseconds: 1500));
     final user = await FirebaseService().loadUserSession();
 
     if (!mounted) return;
@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
           pageBuilder: (_, __, ___) => McqDashboardScreen(user: user),
           transitionsBuilder: (_, animation, __, child) =>
               FadeTransition(opacity: animation, child: child),
-          transitionDuration: const Duration(milliseconds: 300),
+          transitionDuration: const Duration(milliseconds: 200),
         ),
       );
     } else {
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
           pageBuilder: (_, __, ___) => const AuthScreen(),
           transitionsBuilder: (_, animation, __, child) =>
               FadeTransition(opacity: animation, child: child),
-          transitionDuration: const Duration(milliseconds: 300),
+          transitionDuration: const Duration(milliseconds: 200),
         ),
       );
     }
@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0E1A),
+      backgroundColor: const Color(0xFFFFFFFF),
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -86,28 +86,28 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Clean Circular Logo (without glowing blur halos)
+                    // Clean Circular Logo with subtle line border
                     Container(
-                      width: 96,
-                      height: 96,
+                      width: 90,
+                      height: 90,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.12),
-                          width: 2,
+                          color: const Color(0xFFDEDEDE),
+                          width: 1.5,
                         ),
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(48),
+                        borderRadius: BorderRadius.circular(45),
                         child: Image.asset(
                           'assets/images/ultra-10th-logo.jpg',
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => Container(
-                            color: const Color(0xFF1E293B),
+                            color: const Color(0xFF111111),
                             child: const Icon(
                               Icons.quiz_rounded,
-                              size: 46,
-                              color: Color(0xFF6366F1),
+                              size: 42,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -121,33 +121,39 @@ class _SplashScreenState extends State<SplashScreen>
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 26,
                         fontWeight: FontWeight.w800,
-                        letterSpacing: 0.5,
-                        color: Colors.white,
+                        letterSpacing: -0.5,
+                        color: const Color(0xFF111111),
                       ),
                     ),
                     const SizedBox(height: 6),
 
-                    // Subtitle
-                    Text(
-                      'Class 10 Board Exam MCQ Practice',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white.withOpacity(0.6),
-                        fontWeight: FontWeight.w500,
+                    // Website Monochrome Tagline Badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF7F7F7),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: const Color(0xFFDEDEDE)),
+                      ),
+                      child: const Text(
+                        'Class 10 Board MCQ Platform',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF606060),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
 
                     const SizedBox(height: 36),
 
-                    // Clean simple loading indicator
-                    SizedBox(
+                    // Clean black minimal progress indicator
+                    const SizedBox(
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          const Color(0xFF4F46E5).withOpacity(0.8),
-                        ),
+                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF111111)),
                       ),
                     ),
                   ],

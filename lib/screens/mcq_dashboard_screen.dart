@@ -61,31 +61,35 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF161922),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: const Color(0xFFFFFFFF),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: Color(0xFFDEDEDE)),
+        ),
         title: Text(
           'Log Out',
           style: GoogleFonts.plusJakartaSans(
-            color: Colors.white,
+            color: const Color(0xFF111111),
             fontWeight: FontWeight.bold,
           ),
         ),
-        content: Text(
+        content: const Text(
           'Are you sure you want to log out from Ultra 10th?',
-          style: TextStyle(color: Colors.white.withOpacity(0.7)),
+          style: TextStyle(color: Color(0xFF606060)),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('Cancel', style: TextStyle(color: Colors.white.withOpacity(0.6))),
+            child: const Text('Cancel', style: TextStyle(color: Color(0xFF606060))),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
+              backgroundColor: const Color(0xFF111111),
+              foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Log Out', style: TextStyle(color: Colors.white)),
+            child: const Text('Log Out'),
           ),
         ],
       ),
@@ -108,8 +112,8 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
       builder: (ctx) => Container(
         padding: const EdgeInsets.all(24),
         decoration: const BoxDecoration(
-          color: Color(0xFF13161F),
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          color: Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -120,47 +124,48 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: const Color(0xFFDEDEDE),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
             ),
             const SizedBox(height: 20),
 
-            // Subject Pill
+            // Subject Pill (Website B&W Badge)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: _getSubjectColor(test.subject).withOpacity(0.15),
-                borderRadius: BorderRadius.circular(8),
+                color: const Color(0xFFF7F7F7),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color(0xFFDEDEDE)),
               ),
               child: Text(
                 test.subject.toUpperCase(),
-                style: TextStyle(
-                  color: _getSubjectColor(test.subject),
+                style: const TextStyle(
+                  color: Color(0xFF111111),
                   fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.8,
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
 
             // Test Title
             Text(
               test.title,
               style: GoogleFonts.plusJakartaSans(
-                color: Colors.white,
+                color: const Color(0xFF111111),
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w800,
               ),
             ),
             if (test.chapter.isNotEmpty) ...[
               const SizedBox(height: 4),
               Text(
                 test.chapter,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.6),
+                style: const TextStyle(
+                  color: Color(0xFF606060),
                   fontSize: 14,
                 ),
               ),
@@ -168,12 +173,13 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
 
             const SizedBox(height: 20),
 
-            // Stats row
+            // Stats row (B&W cards)
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF1E2330),
-                borderRadius: BorderRadius.circular(16),
+                color: const Color(0xFFF7F7F7),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: const Color(0xFFE5E5E5)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -186,7 +192,7 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                   Container(
                     width: 1,
                     height: 36,
-                    color: Colors.white.withOpacity(0.1),
+                    color: const Color(0xFFDEDEDE),
                   ),
                   _buildModalStat(
                     icon: Icons.timer_outlined,
@@ -196,7 +202,7 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                   Container(
                     width: 1,
                     height: 36,
-                    color: Colors.white.withOpacity(0.1),
+                    color: const Color(0xFFDEDEDE),
                   ),
                   _buildModalStat(
                     icon: Icons.grade_outlined,
@@ -213,8 +219,8 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
             Text(
               'Exam Guidelines:',
               style: GoogleFonts.plusJakartaSans(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
+                color: const Color(0xFF111111),
+                fontWeight: FontWeight.w700,
                 fontSize: 14,
               ),
             ),
@@ -226,7 +232,7 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
 
             const SizedBox(height: 24),
 
-            // Start button
+            // Start button (Solid Black CTA)
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -240,20 +246,21 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4F46E5),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  backgroundColor: const Color(0xFF111111),
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 child: const Text(
-                  'Start MCQ Test Now 🚀',
+                  'Start MCQ Test Now',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
           ],
         ),
       ),
@@ -267,19 +274,19 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
   }) {
     return Column(
       children: [
-        Icon(icon, color: const Color(0xFF818CF8), size: 20),
+        Icon(icon, color: const Color(0xFF111111), size: 20),
         const SizedBox(height: 4),
         Text(
           val,
           style: GoogleFonts.plusJakartaSans(
-            color: Colors.white,
+            color: const Color(0xFF111111),
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
         ),
         Text(
           label,
-          style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 11),
+          style: const TextStyle(color: Color(0xFF606060), fontSize: 11),
         ),
       ],
     );
@@ -287,16 +294,16 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
 
   Widget _buildGuideline(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.only(bottom: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.check_circle_outline, color: Color(0xFF10B981), size: 16),
+          const Icon(Icons.check_circle_rounded, color: Color(0xFF111111), size: 16),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12),
+              style: const TextStyle(color: Color(0xFF606060), fontSize: 12),
             ),
           ),
         ],
@@ -304,28 +311,8 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
     );
   }
 
-  Color _getSubjectColor(String subject) {
-    switch (subject.toLowerCase()) {
-      case 'science':
-        return const Color(0xFF06B6D4);
-      case 'mathematics':
-      case 'maths':
-        return const Color(0xFF8B5CF6);
-      case 'social science':
-      case 'sst':
-        return const Color(0xFFF59E0B);
-      case 'hindi':
-        return const Color(0xFFEC4899);
-      case 'english':
-        return const Color(0xFF10B981);
-      default:
-        return const Color(0xFF6366F1);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Filter tests
     final filteredTests = _allTests.where((test) {
       final matchesSubject = _selectedSubject == 'All' ||
           test.subject.toLowerCase() == _selectedSubject.toLowerCase();
@@ -336,41 +323,51 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
     }).toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF090B10),
+      backgroundColor: const Color(0xFFF7F7F7),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: _loadTests,
-          color: const Color(0xFF6366F1),
-          backgroundColor: const Color(0xFF161922),
+          color: const Color(0xFF111111),
+          backgroundColor: const Color(0xFFFFFFFF),
           child: CustomScrollView(
             slivers: [
-              // Header
+              // Top Bar Header (Website Style)
               SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFFFFFF),
+                    border: Border(
+                      bottom: BorderSide(color: Color(0xFFE5E5E5)),
+                    ),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           Container(
-                            width: 38,
-                            height: 38,
+                            width: 40,
+                            height: 40,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.12),
+                                color: const Color(0xFFDEDEDE),
                                 width: 1.5,
                               ),
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(19),
+                              borderRadius: BorderRadius.circular(20),
                               child: Image.asset(
                                 'assets/images/ultra-10th-logo.jpg',
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => const Icon(
-                                  Icons.person,
-                                  color: Colors.white,
+                                errorBuilder: (_, __, ___) => Container(
+                                  color: const Color(0xFF111111),
+                                  child: const Icon(
+                                    Icons.quiz_rounded,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
                                 ),
                               ),
                             ),
@@ -380,18 +377,18 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Namaste, ${widget.user.name.split(' ').first} 👋',
+                                'Namaste, ${widget.user.name.split(' ').first}',
                                 style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  color: const Color(0xFF111111),
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Class 10 Board MCQ Hub',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.white.withOpacity(0.5),
+                                  color: Color(0xFF606060),
                                 ),
                               ),
                             ],
@@ -400,7 +397,7 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                       ),
                       IconButton(
                         onPressed: _handleLogout,
-                        icon: const Icon(Icons.logout_rounded, color: Color(0xFFEF4444)),
+                        icon: const Icon(Icons.logout_rounded, color: Color(0xFF606060)),
                         tooltip: 'Log Out',
                       ),
                     ],
@@ -408,55 +405,60 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                 ),
               ),
 
-              // Hero Banner
+              // Hero Banner (Website Style B&W)
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 14),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF131A2B),
+                      color: const Color(0xFFFFFFFF),
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.08),
-                      ),
+                      border: Border.all(color: const Color(0xFFDEDEDE)),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x06000000),
+                          blurRadius: 10,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(8),
+                            color: const Color(0xFF111111),
+                            borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Text(
                             'LIVE PRACTICE',
                             style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w800,
                               letterSpacing: 1,
-                              color: Colors.white,
+                              color: Color(0xFFFFFFFF),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        const Text(
+                        const SizedBox(height: 12),
+                        Text(
                           'Chapter-wise MCQ Tests\nWith Real Exam Timer',
-                          style: TextStyle(
+                          style: GoogleFonts.plusJakartaSans(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w800,
                             height: 1.3,
-                            color: Colors.white,
+                            color: const Color(0xFF111111),
                           ),
                         ),
                         const SizedBox(height: 6),
-                        Text(
-                          'Synced live with ultra10th website question bank.',
+                        const Text(
+                          'All questions synced live with ultra10th website.',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color(0xFF606060),
                           ),
                         ),
                       ],
@@ -465,43 +467,43 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                 ),
               ),
 
-              // Search Bar
+              // Search Bar (White background with crisp line border)
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
                     onChanged: (val) => setState(() => _searchQuery = val),
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                    style: const TextStyle(color: Color(0xFF111111), fontSize: 14),
                     decoration: InputDecoration(
                       hintText: 'Search tests by chapter or topic...',
-                      hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.3),
+                      hintStyle: const TextStyle(
+                        color: Color(0xFF999999),
                         fontSize: 13,
                       ),
                       prefixIcon: const Icon(
-                        Icons.search,
-                        color: Color(0xFF818CF8),
+                        Icons.search_rounded,
+                        color: Color(0xFF606060),
                         size: 20,
                       ),
                       filled: true,
-                      fillColor: const Color(0xFF13161F),
+                      fillColor: const Color(0xFFFFFFFF),
                       contentPadding: const EdgeInsets.symmetric(vertical: 12),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide(color: Colors.white.withOpacity(0.06)),
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFFDEDEDE)),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14),
-                        borderSide: const BorderSide(color: Color(0xFF4F46E5)),
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF111111), width: 1.5),
                       ),
                     ),
                   ),
                 ),
               ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              const SliverToBoxAdapter(child: SizedBox(height: 14)),
 
-              // Subject Filter Tabs
+              // Subject Filter Tabs (Clean B&W Chips)
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 38,
@@ -518,18 +520,16 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                         selected: isSelected,
                         onSelected: (_) => setState(() => _selectedSubject = sub),
                         labelStyle: TextStyle(
-                          color: isSelected ? Colors.white : Colors.white.withOpacity(0.6),
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF111111),
+                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                           fontSize: 12,
                         ),
-                        backgroundColor: const Color(0xFF13161F),
-                        selectedColor: const Color(0xFF4F46E5),
+                        backgroundColor: const Color(0xFFFFFFFF),
+                        selectedColor: const Color(0xFF111111),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                           side: BorderSide(
-                            color: isSelected
-                                ? const Color(0xFF4F46E5)
-                                : Colors.white.withOpacity(0.06),
+                            color: isSelected ? const Color(0xFF111111) : const Color(0xFFDEDEDE),
                           ),
                         ),
                         showCheckmark: false,
@@ -546,7 +546,7 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                 const SliverFillRemaining(
                   child: Center(
                     child: CircularProgressIndicator(
-                      color: Color(0xFF6366F1),
+                      color: Color(0xFF111111),
                     ),
                   ),
                 )
@@ -556,23 +556,24 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(24),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.wifi_off_rounded, color: Colors.redAccent, size: 48),
+                          const Icon(Icons.wifi_off_rounded, color: Color(0xFF606060), size: 48),
                           const SizedBox(height: 12),
                           Text(
                             _error!,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.white70),
+                            style: const TextStyle(color: Color(0xFF111111), fontSize: 14),
                           ),
                           const SizedBox(height: 16),
-                          ElevatedButton.icon(
+                          ElevatedButton(
                             onPressed: _loadTests,
-                            icon: const Icon(Icons.refresh),
-                            label: const Text('Try Again'),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF4F46E5),
+                              backgroundColor: const Color(0xFF111111),
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             ),
+                            child: const Text('Retry'),
                           ),
                         ],
                       ),
@@ -583,20 +584,13 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                 SliverFillRemaining(
                   child: Center(
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.quiz_outlined,
-                          size: 48,
-                          color: Colors.white.withOpacity(0.3),
-                        ),
+                        const Icon(Icons.search_off_rounded, color: Color(0xFF999999), size: 48),
                         const SizedBox(height: 12),
                         Text(
-                          'No MCQ Tests found for this filter.',
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.6),
-                            fontSize: 15,
-                          ),
+                          'No MCQ tests found for $_selectedSubject',
+                          style: const TextStyle(color: Color(0xFF606060), fontSize: 14),
                         ),
                       ],
                     ),
@@ -604,139 +598,138 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                 )
               else
                 SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final test = filteredTests[index];
-                        final subColor = _getSubjectColor(test.subject);
-
                         return Container(
-                          margin: const EdgeInsets.only(bottom: 14),
-                          padding: const EdgeInsets.all(18),
+                          margin: const EdgeInsets.bottom(14),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF13161F),
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: Colors.white.withOpacity(0.06)),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: subColor.withOpacity(0.15),
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: Text(
-                                      test.subject.toUpperCase(),
-                                      style: TextStyle(
-                                        color: subColor,
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.timer_outlined,
-                                        size: 14,
-                                        color: Color(0xFF818CF8),
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        '${test.durationMinutes} min',
-                                        style: TextStyle(
-                                          color: Colors.white.withOpacity(0.6),
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                test.title,
-                                style: GoogleFonts.plusJakartaSans(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              if (test.chapter.isNotEmpty) ...[
-                                const SizedBox(height: 4),
-                                Text(
-                                  test.chapter,
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.5),
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                              const SizedBox(height: 16),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.format_list_bulleted,
-                                        size: 15,
-                                        color: Color(0xFF10B981),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        '${test.questions.length} Questions',
-                                        style: TextStyle(
-                                          color: Colors.white.withOpacity(0.7),
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () => _showTestIntroModal(test),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF4F46E5),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    child: const Row(
-                                      children: [
-                                        Text(
-                                          'Start Test',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        SizedBox(width: 4),
-                                        Icon(
-                                          Icons.arrow_forward_rounded,
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                            color: const Color(0xFFFFFFFF),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: const Color(0xFFDEDEDE)),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x04000000),
+                                blurRadius: 8,
+                                offset: Offset(0, 2),
                               ),
                             ],
+                          ),
+                          child: InkWell(
+                            onTap: () => _showTestIntroModal(test),
+                            borderRadius: BorderRadius.circular(16),
+                            child: Padding(
+                              padding: const EdgeInsets.all(18),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Top row: Subject & Duration
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFF7F7F7),
+                                          borderRadius: BorderRadius.circular(20),
+                                          border: Border.all(color: const Color(0xFFDEDEDE)),
+                                        ),
+                                        child: Text(
+                                          test.subject.toUpperCase(),
+                                          style: const TextStyle(
+                                            color: Color(0xFF111111),
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w700,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.timer_outlined, color: Color(0xFF606060), size: 14),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            '${test.durationMinutes}m',
+                                            style: const TextStyle(
+                                              color: Color(0xFF606060),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 12),
+
+                                  // Test Title
+                                  Text(
+                                    test.title,
+                                    style: GoogleFonts.plusJakartaSans(
+                                      color: const Color(0xFF111111),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  if (test.chapter.isNotEmpty) ...[
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      test.chapter,
+                                      style: const TextStyle(
+                                        color: Color(0xFF606060),
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+
+                                  const SizedBox(height: 16),
+
+                                  // Bottom Row: Q count & Start Button
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.quiz_outlined, color: Color(0xFF606060), size: 14),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            '${test.questions.length} Questions',
+                                            style: const TextStyle(
+                                              color: Color(0xFF606060),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF111111),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: const Row(
+                                          children: [
+                                            Text(
+                                              'Start Test',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            SizedBox(width: 4),
+                                            Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 13),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         );
                       },
@@ -744,6 +737,8 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                     ),
                   ),
                 ),
+
+              const SliverToBoxAdapter(child: SizedBox(height: 24)),
             ],
           ),
         ),

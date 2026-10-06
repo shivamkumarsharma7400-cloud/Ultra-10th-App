@@ -6,13 +6,13 @@ import 'screens/splash_screen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Set system UI overlay style for seamless edge-to-edge dark theme
+  // Pure Black & White system bar overlay (matches website light/ink aesthetic)
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Color(0xFF090B10),
-      systemNavigationBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Color(0xFFFFFFFF),
+      systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
 
@@ -27,19 +27,30 @@ class Ultra10thApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ultra 10th - MCQ Practice',
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF090B10),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF4F46E5),
-          brightness: Brightness.dark,
-          surface: const Color(0xFF13161F),
-          background: const Color(0xFF090B10),
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: const Color(0xFFF7F7F7),
+        colorScheme: const ColorScheme.light(
+          brightness: Brightness.light,
+          surface: Color(0xFFFFFFFF),
+          background: Color(0xFFF7F7F7),
+          primary: Color(0xFF111111),
+          onPrimary: Color(0xFFFFFFFF),
+          secondary: Color(0xFF222222),
+          onSecondary: Color(0xFFFFFFFF),
+          outline: Color(0xFFDEDEDE),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFFFFFFF),
+          foregroundColor: Color(0xFF111111),
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          surfaceTintColor: Colors.transparent,
         ),
         textTheme: GoogleFonts.plusJakartaSansTextTheme(
-          ThemeData.dark().textTheme,
+          ThemeData.light().textTheme,
         ),
       ),
       home: const SplashScreen(),
