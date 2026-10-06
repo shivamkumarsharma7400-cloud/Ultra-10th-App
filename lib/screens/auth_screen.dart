@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/firebase_service.dart';
 import 'mcq_dashboard_screen.dart';
@@ -12,6 +13,11 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'profile'],
+    serverClientId: '390396391437-of2lr1jv8kq824n1j2ovg0an9ralbi94.apps.googleusercontent.com',
+  );
+
   bool _isLogin = true;
   bool _isLoading = false;
   bool _obscurePassword = true;
@@ -108,8 +114,42 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
-  // Working Google Sign-In Sheet
-  void _handleGoogleSignIn() {
+  // Native Google Sign-In with Fallback
+  Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        // User cancelled the prompt
+        if (mounted) setState(() => _isLoading = false);
+        return;
+      }
+
+      final user = await FirebaseService().signInWithGoogleAccount(
+        email: googleUser.email,
+        displayName: googleUser.displayName,
+      );
+
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => McqDashboardScreen(user: user)),
+      );
+    } catch (e) {
+      // If native SDK fails (e.g. SHA-1 not yet saved in Firebase Console), fallback to email sheet
+      if (mounted) {
+        setState(() => _isLoading = false);
+        _showGoogleInputSheet();
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  void _showGoogleInputSheet() {
     final initialEmail = _isLogin
         ? _loginEmailController.text.trim()
         : _signupEmailController.text.trim();
