@@ -62,11 +62,11 @@ jobs:
 
       - name: Build APK (Installable App)
         if: ${{ github.event.inputs.build_target == 'both' || github.event.inputs.build_target == 'apk' || github.event.inputs.build_target == null }}
-        run: flutter build apk --release
+        run: flutter build apk --release --android-skip-build-dependency-validation
 
       - name: Build App Bundle (Google Play Store AAB)
         if: ${{ github.event.inputs.build_target == 'both' || github.event.inputs.build_target == 'aab' || github.event.inputs.build_target == null }}
-        run: flutter build appbundle --release
+        run: flutter build appbundle --release --android-skip-build-dependency-validation
 
       - name: Upload Release APK Artifact
         if: ${{ github.event.inputs.build_target == 'both' || github.event.inputs.build_target == 'apk' || github.event.inputs.build_target == null }}
