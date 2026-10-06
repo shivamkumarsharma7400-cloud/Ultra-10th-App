@@ -1,0 +1,104 @@
+name: Build Ultra 10th App (APK & AAB)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      build_target:
+        description: 'Target to build'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - 'both'
+          - 'apk'
+          - 'aab'
+
+jobs:
+  build:
+    name: Build Android Release (${{ github.event.inputs.build_target || 'both' }})
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Verify Flutter & Environment
+        run: |
+          flutter --version
+          flutter doctor -v
+
+      - name: Setup Keystore & Signing Config
+        run: |
+          if [ -n "${{ secrets.KEYSTORE_BASE64 }}" ]; then
+            echo "::notice::Signing key found in GitHub Secrets. Configuring release signature..."
+            echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/upload-keystore.jks
+            cat <<EOF > android/key.properties
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=upload-keystore.jks
+          EOF
+            echo "SIGNED_STATUS=Signed with Play Store Keystore" >> $GITHUB_ENV
+          else
+            echo "::warning::KEYSTORE_BASE64 not configured yet in Secrets. Building release with fallback signature."
+            echo "SIGNED_STATUS=Unsigned / Debug Signature" >> $GITHUB_ENV
+          fi
+
+      - name: Install Flutter Dependencies
+        run: flutter pub get
+
+      - name: Build APK (Installable App)
+        if: ${{ github.event.inputs.build_target == 'both' || github.event.inputs.build_target == 'apk' || github.event.inputs.build_target == null }}
+        run: flutter build apk --release
+
+      - name: Build App Bundle (Google Play Store AAB)
+        if: ${{ github.event.inputs.build_target == 'both' || github.event.inputs.build_target == 'aab' || github.event.inputs.build_target == null }}
+        run: flutter build appbundle --release
+
+      - name: Upload Release APK Artifact
+        if: ${{ github.event.inputs.build_target == 'both' || github.event.inputs.build_target == 'apk' || github.event.inputs.build_target == null }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ultra-10th-v1.0.0-Release-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload Play Store AAB Artifact
+        if: ${{ github.event.inputs.build_target == 'both' || github.event.inputs.build_target == 'aab' || github.event.inputs.build_target == null }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ultra-10th-v1.0.0-PlayStore-AAB
+          path: build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Generate Build Summary
+        run: |
+          echo "## Ultra 10th App Build Complete! 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| **App Name** | Ultra 10th |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Package ID** | \`com.ultra10th.app\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Version** | \`1.0.0+1\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Signing Status** | **${{ env.SIGNED_STATUS }}** |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Generated Files (Available in Actions Artifacts):" >> $GITHUB_STEP_SUMMARY
+          echo "- **Release APK**: For direct installation on Android phones/tablets" >> $GITHUB_STEP_SUMMARY
+          echo "- **Play Store AAB**: Ready to upload directly into Google Play Console" >> $GITHUB_STEP_SUMMARY

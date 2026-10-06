@@ -1,0 +1,6 @@
+# This file is an example. The real key.properties is ignored by git for security.
+# In GitHub Actions, key.properties and upload-keystore.jks are automatically generated from GitHub Secrets!
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=ultra10th
+storeFile=upload-keystore.jks
