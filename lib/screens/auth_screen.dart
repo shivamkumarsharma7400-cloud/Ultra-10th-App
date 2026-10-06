@@ -187,7 +187,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
               if (modalError != null)
                 Container(
-                  margin: const EdgeInsets.bottom(16),
+                  margin: const EdgeInsets.only(bottom: 16),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: const Color(0xFFFEF2F2),
@@ -616,7 +616,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       // Error Banner
                       if (_errorMessage != null)
                         Container(
-                          margin: const EdgeInsets.bottom(16),
+                          margin: const EdgeInsets.only(bottom: 16),
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                           decoration: BoxDecoration(
                             color: const Color(0xFFFEF2F2),

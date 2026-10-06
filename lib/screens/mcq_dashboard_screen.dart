@@ -604,7 +604,7 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                       (context, index) {
                         final test = filteredTests[index];
                         return Container(
-                          margin: const EdgeInsets.bottom(14),
+                          margin: const EdgeInsets.only(bottom: 14),
                           decoration: BoxDecoration(
                             color: const Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.circular(16),
