@@ -1,0 +1,12 @@
+version:
+  revision: 0
+  channel: stable
+
+project_type: app
+
+migration:
+  platforms:
+    - platform: root
+      baseline_revision: 0
+    - platform: android
+      baseline_revision: 0
