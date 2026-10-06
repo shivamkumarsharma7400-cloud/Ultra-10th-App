@@ -116,9 +116,9 @@ class McqTest {
     final qValues = fields['questions']?['arrayValue']?['values'] as List? ?? [];
     for (var qItem in qValues) {
       if (qItem is Map && qItem['mapValue'] != null && qItem['mapValue']['fields'] != null) {
-        qList.add(McqQuestion.fromFirestoreMap(qItem['mapValue']['fields']));
+        qList.add(McqQuestion.fromFirestoreMap(Map<String, dynamic>.from(qItem['mapValue']['fields'] as Map)));
       } else if (qItem is Map) {
-        qList.add(McqQuestion.fromFirestoreMap(qItem));
+        qList.add(McqQuestion.fromFirestoreMap(Map<String, dynamic>.from(qItem)));
       }
     }
 
