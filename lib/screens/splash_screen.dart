@@ -23,11 +23,11 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1400),
+      duration: const Duration(milliseconds: 1000),
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.85, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+    _scaleAnimation = Tween<double>(begin: 0.95, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
     );
 
     _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _checkSessionAndNavigate() async {
-    await Future.delayed(const Duration(milliseconds: 2200));
+    await Future.delayed(const Duration(milliseconds: 1800));
     final user = await FirebaseService().loadUserSession();
 
     if (!mounted) return;
@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
           pageBuilder: (_, __, ___) => McqDashboardScreen(user: user),
           transitionsBuilder: (_, animation, __, child) =>
               FadeTransition(opacity: animation, child: child),
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 300),
         ),
       );
     } else {
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
           pageBuilder: (_, __, ___) => const AuthScreen(),
           transitionsBuilder: (_, animation, __, child) =>
               FadeTransition(opacity: animation, child: child),
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 300),
         ),
       );
     }
@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF090B10),
+      backgroundColor: const Color(0xFF0A0E1A),
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -86,98 +86,67 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // App Logo Container
+                    // Clean Circular Logo (without glowing blur halos)
                     Container(
-                      width: 104,
-                      height: 104,
+                      width: 96,
+                      height: 96,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFF4F46E5).withOpacity(0.4),
-                            blurRadius: 32,
-                            spreadRadius: 8,
-                          ),
-                        ],
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.12),
+                          width: 2,
+                        ),
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(52),
+                        borderRadius: BorderRadius.circular(48),
                         child: Image.asset(
                           'assets/images/ultra-10th-logo.jpg',
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF4F46E5), Color(0xFF7C3AED)],
-                              ),
-                            ),
+                            color: const Color(0xFF1E293B),
                             child: const Icon(
                               Icons.quiz_rounded,
-                              size: 50,
-                              color: Colors.white,
+                              size: 46,
+                              color: Color(0xFF6366F1),
                             ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
 
-                    // App Title
+                    // Title
                     Text(
                       'ULTRA 10th',
                       style: GoogleFonts.plusJakartaSans(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.2,
+                        fontSize: 26,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.5,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
 
-                    // Subtitle / Tagline
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1E2330),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: const Color(0xFF4F46E5).withOpacity(0.3),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.timer_outlined,
-                            size: 14,
-                            color: Color(0xFF818CF8),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'MCQ Practice & Test Platform',
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xFFC7D2FE),
-                            ),
-                          ),
-                        ],
+                    // Subtitle
+                    Text(
+                      'Class 10 Board Exam MCQ Practice',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white.withOpacity(0.6),
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
 
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 36),
 
-                    // Subtle loading spinner
+                    // Clean simple loading indicator
                     SizedBox(
-                      width: 24,
-                      height: 24,
+                      width: 20,
+                      height: 20,
                       child: CircularProgressIndicator(
-                        strokeWidth: 2.5,
+                        strokeWidth: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          const Color(0xFF6366F1).withOpacity(0.8),
+                          const Color(0xFF4F46E5).withOpacity(0.8),
                         ),
                       ),
                     ),

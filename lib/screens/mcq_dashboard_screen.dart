@@ -354,19 +354,17 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                       Row(
                         children: [
                           Container(
-                            width: 40,
-                            height: 40,
+                            width: 38,
+                            height: 38,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFF4F46E5).withOpacity(0.3),
-                                  blurRadius: 10,
-                                ),
-                              ],
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.12),
+                                width: 1.5,
+                              ),
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(19),
                               child: Image.asset(
                                 'assets/images/ultra-10th-logo.jpg',
                                 fit: BoxFit.cover,
@@ -418,19 +416,11 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF3730A3), Color(0xFF1E1B4B)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                      color: const Color(0xFF131A2B),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.08),
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF3730A3).withOpacity(0.3),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
