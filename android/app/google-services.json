@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "390396391437",
+    "project_id": "ultra-10th-a5611",
+    "storage_bucket": "ultra-10th-a5611.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390396391437:android:7deae95c3b0abf6b7ce544",
+        "android_client_info": {
+          "package_name": "com.ultra10th.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390396391437-of2lr1jv8kq824n1j2ovg0an9ralbi94.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYK--K8nabmx7Stkx2_3gloolOFOCluAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390396391437-of2lr1jv8kq824n1j2ovg0an9ralbi94.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
