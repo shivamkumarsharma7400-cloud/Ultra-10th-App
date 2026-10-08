@@ -43,6 +43,21 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
+  String _formatError(dynamic e) {
+    final str = e.toString().replaceFirst('Exception: ', '');
+    final lower = str.toLowerCase();
+    if (lower.contains('socketexception') ||
+        lower.contains('failed host lookup') ||
+        lower.contains('clientexception') ||
+        lower.contains('handshakeexception') ||
+        lower.contains('network') ||
+        lower.contains('timeout') ||
+        lower.contains('connection')) {
+      return 'Turn on Internet';
+    }
+    return str;
+  }
+
   Future<void> _handleLogin() async {
     final email = _loginEmailController.text.trim();
     final password = _loginPasswordController.text;
@@ -68,7 +83,7 @@ class _AuthScreenState extends State<AuthScreen> {
         MaterialPageRoute(builder: (_) => McqDashboardScreen(user: user)),
       );
     } catch (e) {
-      setState(() => _errorMessage = e.toString().replaceFirst('Exception: ', ''));
+      setState(() => _errorMessage = _formatError(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -108,7 +123,7 @@ class _AuthScreenState extends State<AuthScreen> {
         MaterialPageRoute(builder: (_) => McqDashboardScreen(user: user)),
       );
     } catch (e) {
-      setState(() => _errorMessage = e.toString().replaceFirst('Exception: ', ''));
+      setState(() => _errorMessage = _formatError(e));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -358,7 +373,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           } catch (e) {
                             setModalState(() {
                               modalLoading = false;
-                              modalError = e.toString().replaceFirst('Exception: ', '');
+                              modalError = _formatError(e);
                             });
                           }
                         },

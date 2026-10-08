@@ -29,6 +29,7 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
     'Social Science',
     'Hindi',
     'English',
+    'Sanskrit',
   ];
 
   @override
@@ -50,8 +51,16 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
         _isLoading = false;
       });
     } catch (e) {
+      final errStr = e.toString().toLowerCase();
+      final isNetwork = errStr.contains('socketexception') ||
+          errStr.contains('failed host lookup') ||
+          errStr.contains('clientexception') ||
+          errStr.contains('network') ||
+          errStr.contains('handshakeexception') ||
+          errStr.contains('timeout') ||
+          errStr.contains('connection');
       setState(() {
-        _error = e.toString().replaceFirst('Exception: ', '');
+        _error = isNetwork ? 'Turn on Internet' : 'Turn on Internet';
         _isLoading = false;
       });
     }
@@ -561,9 +570,19 @@ class _McqDashboardScreenState extends State<McqDashboardScreen> {
                           const Icon(Icons.wifi_off_rounded, color: Color(0xFF606060), size: 48),
                           const SizedBox(height: 12),
                           Text(
-                            _error!,
+                            _error == 'Turn on Internet' ||
+                                    _error!.toLowerCase().contains('socket') ||
+                                    _error!.toLowerCase().contains('host') ||
+                                    _error!.toLowerCase().contains('client') ||
+                                    _error!.toLowerCase().contains('connection')
+                                ? 'Turn on Internet'
+                                : _error!,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(color: Color(0xFF111111), fontSize: 14),
+                            style: GoogleFonts.plusJakartaSans(
+                              color: const Color(0xFF111111),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(height: 16),
                           ElevatedButton(
